@@ -1,1 +1,461 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Welcome</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#000;
+    overflow:hidden;
+    width:100vw;
+    height:100vh;
+    font-family:Arial,Helvetica,sans-serif;
+    position:relative;
+}
+
+/* แสงตามเมาส์ */
+
+#cursorLight{
+
+    position:fixed;
+
+    width:500px;
+    height:500px;
+
+    border-radius:50%;
+
+    pointer-events:none;
+
+    transform:translate(-50%,-50%);
+
+    background:radial-gradient(circle,
+    rgba(255,255,255,.20) 0%,
+    rgba(180,180,180,.12) 25%,
+    rgba(100,100,100,.05) 55%,
+    transparent 80%);
+
+    filter:blur(50px);
+
+}
+
+/* ตัวหนังสือ */
+
+.textWrap{
+
+    position:absolute;
+
+    top:13%;
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:25px;
+
+}
+
+.word{
+
+    font-size:85px;
+
+    font-weight:900;
+
+    letter-spacing:5px;
+
+    color:transparent;
+
+    background:
+
+    radial-gradient(circle at var(--mx,50%) var(--my,50%),
+
+    #ffffff 0%,
+
+    #e5e5e5 15%,
+
+    #bbbbbb 35%,
+
+    #777777 60%,
+
+    #111111 100%);
+
+    background-size:180% 180%;
+
+    -webkit-background-clip:text;
+
+    background-clip:text;
+
+}
+
+#welcome{
+
+    transform:translateX(-140vw);
+
+    animation:leftMove 2.2s forwards;
+
+}
+
+#portfolio{
+
+    transform:translateX(140vw);
+
+    animation:rightMove 2.2s forwards;
+
+}
+
+@keyframes leftMove{
+
+    to{
+
+        transform:translateX(0);
+
+    }
+
+}
+
+@keyframes rightMove{
+
+    to{
+
+        transform:translateX(0);
+
+    }
+
+}
+
+/* เชือก */
+
+.rope{
+
+    position:absolute;
+
+    left:50%;
+
+    top:0;
+
+    width:5px;
+
+    height:170px;
+
+    background:#d8d8d8;
+
+    transform-origin:top;
+
+    animation:swing 4s ease-in-out infinite;
+
+}
+
+/* ป้าย */
+
+.card{
+
+    position:absolute;
+
+    left:50%;
+
+    top:-450px;
+
+    width:270px;
+
+    height:350px;
+
+    border-radius:25px;
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.25);
+
+    backdrop-filter:blur(12px);
+
+    transform-origin:top center;
+
+    animation:
+
+    drop 1.8s ease forwards,
+
+    swing 4s ease-in-out infinite;
+
+    animation-delay:
+
+    2.2s,
+
+    4s;
+
+    cursor:grab;
+
+    user-select:none;
+
+    box-shadow:
+
+    0 0 35px rgba(255,255,255,.08);
+
+}
+
+@keyframes drop{
+
+0%{
+
+top:-450px;
+
+}
+
+65%{
+
+top:165px;
+
+}
+
+78%{
+
+top:125px;
+
+}
+
+90%{
+
+top:150px;
+
+}
+
+100%{
+
+top:140px;
+
+}
+
+}
+
+@keyframes swing{
+
+0%{
+
+transform:translateX(-50%) rotate(0deg);
+
+}
+
+25%{
+
+transform:translateX(-50%) rotate(4deg);
+
+}
+
+50%{
+
+transform:translateX(-50%) rotate(-3deg);
+
+}
+
+75%{
+
+transform:translateX(-50%) rotate(2deg);
+
+}
+
+100%{
+
+transform:translateX(-50%) rotate(0deg);
+
+}
+
+}
+```
+```html
+.photo-hole{
+    width:18px;
+    height:18px;
+    border:3px solid #999;
+    border-radius:50%;
+    background:#111;
+    margin:18px auto 12px;
+}
+
+.photo-box{
+    width:160px;
+    height:180px;
+    margin:auto;
+    border:2px dashed rgba(255,255,255,.35);
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#bfbfbf;
+    font-size:20px;
+    text-align:center;
+}
+
+.name{
+    margin-top:20px;
+    text-align:center;
+    color:#fff;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.job{
+    margin-top:8px;
+    text-align:center;
+    color:#9d9d9d;
+    font-size:16px;
+}
+
+@media(max-width:768px){
+
+    .word{
+        font-size:48px;
+    }
+
+    .card{
+        width:220px;
+        height:310px;
+    }
+
+    .photo-box{
+        width:130px;
+        height:150px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="cursorLight"></div>
+
+<div class="textWrap">
+
+    <div class="word" id="welcome">
+        WELCOME
+    </div>
+
+    <div class="word" id="portfolio">
+        MY PORTFOLIO
+    </div>
+
+</div>
+
+<div class="rope"></div>
+
+<div class="card" id="card">
+
+    <div class="photo-hole"></div>
+
+    <div class="photo-box">
+        YOUR PHOTO
+    </div>
+
+    <div class="name">
+        Your Name
+    </div>
+
+    <div class="job">
+        Portfolio
+    </div>
+
+</div>
+
+<script>
+```
+```html
+// เอฟเฟกต์แสงและสีในตัวอักษรตามเมาส์
+const cursorLight = document.getElementById("cursorLight");
+
+document.addEventListener("mousemove", (e) => {
+
+    cursorLight.style.left = e.clientX + "px";
+    cursorLight.style.top = e.clientY + "px";
+
+    const x = (e.clientX / window.innerWidth) * 100;
+    const y = (e.clientY / window.innerHeight) * 100;
+
+    document.documentElement.style.setProperty("--mx", x + "%");
+    document.documentElement.style.setProperty("--my", y + "%");
+
+});
+
+// ลากป้ายได้
+const card = document.getElementById("card");
+
+let dragging = false;
+let startX = 0;
+let startY = 0;
+
+card.addEventListener("mousedown", (e) => {
+
+    dragging = true;
+
+    startX = e.clientX - card.offsetLeft;
+    startY = e.clientY - card.offsetTop;
+
+    card.style.cursor = "grabbing";
+
+});
+
+document.addEventListener("mouseup", () => {
+
+    dragging = false;
+    card.style.cursor = "grab";
+
+});
+
+document.addEventListener("mousemove", (e) => {
+
+    if (!dragging) return;
+
+    card.style.left = (e.clientX - startX) + "px";
+    card.style.top = (e.clientY - startY) + "px";
+
+});
+
+// รองรับการสัมผัสบนมือถือ
+card.addEventListener("touchstart", (e) => {
+
+    dragging = true;
+
+    startX = e.touches[0].clientX - card.offsetLeft;
+    startY = e.touches[0].clientY - card.offsetTop;
+
+});
+
+document.addEventListener("touchmove", (e) => {
+
+    if (!dragging) return;
+
+    card.style.left = (e.touches[0].clientX - startX) + "px";
+    card.style.top = (e.touches[0].clientY - startY) + "px";
+
+}, { passive: true });
+
+document.addEventListener("touchend", () => {
+
+    dragging = false;
+
+});
+
+// เปลี่ยนไปหน้าถัดไปอัตโนมัติหลัง 6 วินาที
+setTimeout(() => {
+
+    window.location.href = "profile.html";
+
+}, 6000);
+
+</script>
+
+</body>
+</html>
+```
 
