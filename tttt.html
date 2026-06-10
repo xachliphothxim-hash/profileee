@@ -1,1 +1,490 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Welcome</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+width:100vw;
+height:100vh;
+overflow:hidden;
+background:#000;
+font-family:Arial,Helvetica,sans-serif;
+position:relative;
+}
+
+/* แสงตามเมาส์ */
+
+#cursorLight{
+position:fixed;
+width:450px;
+height:450px;
+border-radius:50%;
+pointer-events:none;
+transform:translate(-50%,-50%);
+background:radial-gradient(circle,
+rgba(255,255,255,.20),
+rgba(180,180,180,.10),
+transparent 70%);
+filter:blur(45px);
+z-index:0;
+}
+
+/* ข้อความกลางจอ */
+
+.textWrap{
+
+position:absolute;
+
+left:50%;
+
+top:50%;
+
+transform:translate(-50%,-50%);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+gap:20px;
+
+width:100%;
+
+z-index:5;
+
+}
+
+.word{
+
+font-size:88px;
+
+font-weight:900;
+
+letter-spacing:4px;
+
+color:transparent;
+
+background:
+radial-gradient(circle at 50% 50%,
+#ffffff,
+#d9d9d9 20%,
+#999 45%,
+#555 70%,
+#000 100%);
+
+-webkit-background-clip:text;
+
+background-clip:text;
+
+background-size:220% 220%;
+
+}
+
+#welcome{
+
+transform:translateX(-130vw);
+
+animation:leftMove 2s forwards;
+
+}
+
+#portfolio{
+
+transform:translateX(130vw);
+
+animation:rightMove 2s forwards;
+
+}
+
+@keyframes leftMove{
+
+to{
+
+transform:translateX(0);
+
+}
+
+}
+
+@keyframes rightMove{
+
+to{
+
+transform:translateX(0);
+
+}
+
+}
+
+/* เชือก */
+
+.rope{
+
+position:absolute;
+
+top:0;
+
+left:50%;
+
+width:4px;
+
+height:180px;
+
+background:#d0d0d0;
+
+transform-origin:top center;
+
+z-index:2;
+
+}
+
+/* ป้าย */
+
+.card{
+
+position:absolute;
+
+top:-420px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+width:260px;
+
+height:340px;
+
+border-radius:22px;
+
+background:rgba(255,255,255,.08);
+
+border:1px solid rgba(255,255,255,.25);
+
+backdrop-filter:blur(12px);
+
+box-shadow:0 0 30px rgba(255,255,255,.10);
+
+z-index:3;
+
+cursor:grab;
+
+user-select:none;
+
+animation:drop 1.8s ease forwards;
+
+animation-delay:2s;
+
+}
+
+@keyframes drop{
+
+0%{
+
+top:-420px;
+
+}
+
+70%{
+
+top:230px;
+
+}
+
+82%{
+
+top:200px;
+
+}
+
+92%{
+
+top:220px;
+
+}
+
+100%{
+
+top:210px;
+
+}
+
+}
+  ```html
+/* รูปในป้าย */
+
+.photo-hole{
+
+width:18px;
+
+height:18px;
+
+border-radius:50%;
+
+border:3px solid #999;
+
+background:#111;
+
+margin:18px auto;
+
+}
+
+.photo-box{
+
+width:150px;
+
+height:170px;
+
+margin:auto;
+
+border:2px dashed rgba(255,255,255,.35);
+
+border-radius:15px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+text-align:center;
+
+color:#bdbdbd;
+
+font-size:18px;
+
+}
+
+.name{
+
+margin-top:18px;
+
+text-align:center;
+
+font-size:26px;
+
+font-weight:bold;
+
+color:white;
+
+}
+
+.job{
+
+margin-top:6px;
+
+text-align:center;
+
+font-size:15px;
+
+color:#a0a0a0;
+
+}
+
+/* มือถือ */
+
+@media(max-width:768px){
+
+.word{
+
+font-size:50px;
+
+}
+
+.card{
+
+width:220px;
+
+height:300px;
+
+}
+
+.photo-box{
+
+width:120px;
+
+height:140px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="cursorLight"></div>
+
+<div class="textWrap">
+
+<div class="word" id="welcome">
+WELCOME
+</div>
+
+<div class="word" id="portfolio">
+MY PORTFOLIO
+</div>
+
+</div>
+
+<div class="rope" id="rope"></div>
+
+<div class="card" id="card">
+
+<div class="photo-hole"></div>
+
+<div class="photo-box">
+
+YOUR PHOTO
+
+</div>
+
+<div class="name">
+
+YOUR NAME
+
+</div>
+
+<div class="job">
+
+Portfolio
+
+</div>
+
+</div>
+
+<script>
+```
+```javascript
+const cursorLight = document.getElementById("cursorLight");
+const card = document.getElementById("card");
+const rope = document.getElementById("rope");
+
+let dragging = false;
+let offsetX = 0;
+let offsetY = 0;
+
+// แสงและสีในตัวอักษรเคลื่อนตามเมาส์
+document.addEventListener("mousemove", (e) => {
+
+    cursorLight.style.left = e.clientX + "px";
+    cursorLight.style.top = e.clientY + "px";
+
+    const x = (e.clientX / window.innerWidth) * 100;
+    const y = (e.clientY / window.innerHeight) * 100;
+
+    document.querySelectorAll(".word").forEach(word => {
+
+        word.style.background =
+        `radial-gradient(circle at ${x}% ${y}%,
+        #ffffff 0%,
+        #e5e5e5 20%,
+        #9a9a9a 45%,
+        #4d4d4d 70%,
+        #000000 100%)`;
+
+        word.style.webkitBackgroundClip = "text";
+        word.style.backgroundClip = "text";
+        word.style.color = "transparent";
+
+    });
+
+    // ถ้ากำลังลากป้าย ให้เชือกขยับตาม
+    if (dragging) {
+
+        const left = e.clientX - offsetX;
+        const top = e.clientY - offsetY;
+
+        card.style.left = left + "px";
+        card.style.top = top + "px";
+        card.style.transform = "none";
+
+        rope.style.left = (left + card.offsetWidth / 2) + "px";
+        rope.style.height = Math.max(40, top) + "px";
+    }
+});
+
+// เริ่มลาก
+card.addEventListener("mousedown", (e) => {
+
+    dragging = true;
+
+    offsetX = e.clientX - card.offsetLeft;
+    offsetY = e.clientY - card.offsetTop;
+
+    card.style.cursor = "grabbing";
+
+});
+
+// ปล่อยเมาส์
+document.addEventListener("mouseup", () => {
+
+    dragging = false;
+    card.style.cursor = "grab";
+
+});
+```
+```html
+/* รองรับการลากบนมือถือ */
+
+card.addEventListener("touchstart", (e) => {
+
+    dragging = true;
+
+    offsetX = e.touches[0].clientX - card.offsetLeft;
+    offsetY = e.touches[0].clientY - card.offsetTop;
+
+}, { passive: true });
+
+document.addEventListener("touchmove", (e) => {
+
+    if (!dragging) return;
+
+    const left = e.touches[0].clientX - offsetX;
+    const top = e.touches[0].clientY - offsetY;
+
+    card.style.left = left + "px";
+    card.style.top = top + "px";
+    card.style.transform = "none";
+
+    rope.style.left = (left + card.offsetWidth / 2) + "px";
+    rope.style.height = Math.max(40, top) + "px";
+
+}, { passive: true });
+
+document.addEventListener("touchend", () => {
+
+    dragging = false;
+
+});
+
+/* เปลี่ยนหน้าอัตโนมัติหลัง 6 วินาที */
+
+setTimeout(() => {
+
+    window.location.href = "profile.html";
+
+}, 6000);
+
+</script>
+
+</body>
+</html>
+```
+
+```
 
