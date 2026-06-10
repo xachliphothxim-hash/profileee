@@ -1,0 +1,281 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome Portfolio</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    overflow:hidden;
+    background:#000;
+    font-family:Arial,Helvetica,sans-serif;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+}
+
+/* แสงตามเมาส์ */
+#light{
+    position:absolute;
+    width:350px;
+    height:350px;
+    border-radius:50%;
+    background:radial-gradient(circle,
+    rgba(0,255,255,.35),
+    rgba(255,0,255,.15),
+    transparent 70%);
+    pointer-events:none;
+    transform:translate(-50%,-50%);
+    filter:blur(30px);
+}
+
+/* ข้อความ */
+.title{
+    position:absolute;
+    top:18%;
+    width:100%;
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    overflow:hidden;
+}
+
+.word{
+    font-size:72px;
+    font-weight:bold;
+    letter-spacing:6px;
+    background:linear-gradient(
+        90deg,
+        #00eaff,
+        #4dff88,
+        #ffe600,
+        #ff00d4
+    );
+    background-size:300%;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:gradient 5s linear infinite;
+}
+
+#welcome{
+    transform:translateX(-150vw);
+    animation:slideLeft 2s forwards;
+}
+
+#portfolio{
+    transform:translateX(150vw);
+    animation:slideRight 2s forwards;
+}
+
+@keyframes slideLeft{
+    to{
+        transform:translateX(0);
+    }
+}
+
+@keyframes slideRight{
+    to{
+        transform:translateX(0);
+    }
+}
+
+@keyframes gradient{
+    0%{background-position:0%;}
+    100%{background-position:300%;}
+}
+
+/* เชือก */
+.rope{
+    position:absolute;
+    width:4px;
+    height:170px;
+    background:#ddd;
+    top:0;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+/* ป้าย */
+.card{
+    position:absolute;
+    width:260px;
+    height:340px;
+    top:-420px;
+    left:50%;
+    transform:translateX(-50%);
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(12px);
+    border:2px solid rgba(255,255,255,.2);
+    border-radius:22px;
+    animation:drop 1.8s ease-out forwards;
+    animation-delay:2.2s;
+    cursor:grab;
+    user-select:none;
+    box-shadow:0 0 30px rgba(255,255,255,.15);
+}
+
+@keyframes drop{
+    0%{
+        top:-420px;
+    }
+    70%{
+        top:150px;
+    }
+    82%{
+        top:120px;
+    }
+    92%{
+        top:145px;
+    }
+    100%{
+        top:135px;
+    }
+}
+
+.hole{
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    background:#111;
+    border:3px solid #aaa;
+    margin:18px auto;
+}
+
+.photo{
+    width:150px;
+    height:170px;
+    margin:auto;
+    border-radius:16px;
+    border:2px dashed #888;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#bbb;
+    text-align:center;
+}
+
+.name{
+    color:white;
+    text-align:center;
+    margin-top:18px;
+    font-size:26px;
+    font-weight:bold;
+}
+
+.text{
+    color:#aaa;
+    text-align:center;
+    margin-top:8px;
+}
+
+/* จอเล็ก */
+@media(max-width:700px){
+
+.word{
+    font-size:42px;
+}
+
+.card{
+    width:220px;
+    height:300px;
+}
+
+.photo{
+    width:130px;
+    height:150px;
+}
+
+}
+</style>
+
+</head>
+<body>
+
+<div id="light"></div>
+
+<div class="title">
+    <div class="word" id="welcome">
+        WELCOME
+    </div>
+
+    <div class="word" id="portfolio">
+        MY PORTFOLIO
+    </div>
+</div>
+
+<div class="rope"></div>
+
+<div class="card" id="card">
+
+    <div class="hole"></div>
+
+    <div class="photo">
+        YOUR<br>PHOTO
+    </div>
+
+    <div class="name">
+        Your Name
+    </div>
+
+    <div class="text">
+        Portfolio
+    </div>
+
+</div>
+
+<script>
+
+/* แสงตามเมาส์ */
+const light=document.getElementById("light");
+
+document.addEventListener("mousemove",(e)=>{
+    light.style.left=e.clientX+"px";
+    light.style.top=e.clientY+"px";
+});
+
+/* ลากป้าย */
+const card=document.getElementById("card");
+
+let drag=false;
+let offsetX=0;
+let offsetY=0;
+
+card.addEventListener("mousedown",(e)=>{
+    drag=true;
+    offsetX=e.offsetX;
+    offsetY=e.offsetY;
+    card.style.cursor="grabbing";
+});
+
+document.addEventListener("mouseup",()=>{
+    drag=false;
+    card.style.cursor="grab";
+});
+
+document.addEventListener("mousemove",(e)=>{
+    if(!drag)return;
+
+    card.style.left=(e.clientX-offsetX+offsetX/2)+"px";
+    card.style.top=(e.clientY-offsetY)+"px";
+});
+
+/* เปลี่ยนหน้าอัตโนมัติ */
+setTimeout(()=>{
+    window.location.href="profile.html";
+},6000);
+
+</script>
+
+</body>
+</html>
+```
